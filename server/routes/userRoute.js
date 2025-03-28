@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/userModel");
+const bcrypt = require("bcrypt");
 
 // Route for Register:
 
@@ -15,6 +16,15 @@ router.post("/register", async (req, res) => {
       });
     }
 
+     // Hashing The password
+
+     const salt = await bcrypt.genSalt(10);
+
+     const hashedPassword = await bcrypt.hash(req.body.password, salt);
+     req.body.password = hashedPassword;
+ 
+     console.log(salt);
+
     const newUser = await User(req.body);
   await newUser.save();
 
@@ -22,7 +32,7 @@ router.post("/register", async (req, res) => {
     success: true,
     message: "User registered successfully",
   });
-  
+
   } catch (error) {
     console.log(error);
   }
