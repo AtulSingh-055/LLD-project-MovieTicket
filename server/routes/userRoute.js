@@ -3,8 +3,9 @@ const router = express.Router();
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const authMiddleware = require("../middlewares/authMiddleware");
 
-// Route for Register:
+// Route for Register
 
 router.post("/register", async (req, res) => {
   try {
@@ -17,7 +18,7 @@ router.post("/register", async (req, res) => {
       });
     }
 
-    // Hashing The password
+    // Hash The password
 
     const salt = await bcrypt.genSalt(10);
 
@@ -27,7 +28,8 @@ router.post("/register", async (req, res) => {
     console.log(salt);
 
     const newUser = await User(req.body);
-    await newUser.save();
+
+    await newUser.save(); // saves the data in the database
 
     res.send({
       success: true,
@@ -61,16 +63,21 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    const token = jwt.sign({userId : user._id} , `${process.env.SECRET_KEY}` , {expiresIn:  "1d"})
+    const token = jwt.sign({ userId: user._id }, `${process.env.SECRET_KEY}`, {
+      expiresIn: "1d",
+    });
 
     res.send({
       success: true,
+      user: user,
       message: "User Logged in",
-      token : token
+      token: token,
     });
   } catch (error) {
     console.log(err);
   }
 });
+
+router.get("/get-current-user", authMiddleware, async (req, res) => {});
 
 module.exports = router;

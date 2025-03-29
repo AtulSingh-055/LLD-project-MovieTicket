@@ -1,21 +1,25 @@
 import React from "react";
+
 import { Form, Input, Button, message } from "antd";
-import { Link } from "react-router-dom";
+import {Link, resolvePath} from 'react-router-dom'
 import { RegisterUser } from "../apicalls/users";
 
 function Register() {
-  const submitForm = async (value) => {
+
+
+  const submitForm= async (value)=>{
     try {
-      const response = await RegisterUser(value);
-      if (response.success) {
-        message.success(response.message);
-      } else {
-        message.error(response.message);
-      }
+       const response =  await RegisterUser(value)
+        if(response.success){
+          message.success(response.message)
+        }else{
+          message.error(response.message)
+        }
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
+
 
   return (
     <>
@@ -85,4 +89,5 @@ function Register() {
     </>
   );
 }
+
 export default Register;
