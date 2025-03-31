@@ -1,10 +1,11 @@
 const express = require("express");
-require('dotenv').config();
+require("dotenv").config();
 const mongoose = require("mongoose");
 
 const app = express();
 const PORT = 5000;
 const userRoutes = require("./routes/userRoute");
+const theatreRoutes = require("./routes/theatreRoutes");
 
 mongoose
   .connect(
@@ -15,15 +16,12 @@ mongoose
     console.log(err);
   });
 
-
-
 app.use(express.json());
 app.use(express.urlencoded());
 
 app.use("/api/users", userRoutes);
+app.use("/api/theatres", theatreRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server started and is running on port ${PORT}`);
 });
-
-
