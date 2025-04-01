@@ -6,6 +6,7 @@ import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { getAllTheatres } from "../../apicalls/theatres";
 import { useSelector, useDispatch } from "react-redux";
 import { showLoading, hideLoading } from "../../redux/loadersSlice";
+import ShowModal from "./ShowModal";
 
 const TheatreList = () => {
   const { user } = useSelector((state) => state.user);
@@ -14,6 +15,7 @@ const TheatreList = () => {
   const [selectedTheatre, setSelectedTheatre] = useState(null);
   const [formType, setFormType] = useState("add");
   const [theatres, setTheatres] = useState(null);
+  const [isShowModalOpen, setIsShowModalOpen] = useState(false);
   const dispatch = useDispatch();
 
   const getData = async () => {
@@ -95,6 +97,16 @@ const TheatreList = () => {
             >
               <DeleteOutlined />
             </Button>
+            {data.isActive && (
+              <Button
+                onClick={() => {
+                  setIsShowModalOpen(true);
+                  setSelectedTheatre(data);
+                }}
+              >
+                + Shows
+              </Button>
+            )}
           </div>
         );
       },
@@ -136,6 +148,14 @@ const TheatreList = () => {
           setIsDeleteModalOpen={setIsDeleteModalOpen}
           setSelectedTheatre={setSelectedTheatre}
           getData={getData}
+        />
+      )}
+
+      {isShowModalOpen && (
+        <ShowModal
+          isShowModalOpen={isShowModalOpen}
+          setIsShowModalOpen={setIsShowModalOpen}
+          selectedTheatre={selectedTheatre}
         />
       )}
     </>

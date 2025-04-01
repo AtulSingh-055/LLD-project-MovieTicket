@@ -19,10 +19,9 @@ function Home() {
       const response = await getAllMovies();
       setMovies(response.data);
     } catch (error) {
-      console.log("Error fetching movies:", error); // Debug log
       message.error("Failed to fetch movies. Please try again later.");
     } finally {
-      dispatch(hideLoading()); // Ensure hideLoading is always called
+      dispatch(hideLoading()); 
     }
   };
 

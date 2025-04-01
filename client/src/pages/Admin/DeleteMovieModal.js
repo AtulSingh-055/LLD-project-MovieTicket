@@ -30,7 +30,7 @@ const DeleteMovieModal = ({
       dispatch(hideLoading());
       setIsDeleteModalOpen(false);
       message.error(err.messagae);
-    } finally {
+    } finally { 
       dispatch(hideLoading());
     }
   };
