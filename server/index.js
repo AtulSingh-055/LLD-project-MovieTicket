@@ -6,6 +6,7 @@ const app = express();
 const PORT = 5000;
 const userRoutes = require("./routes/userRoute");
 const theatreRoutes = require("./routes/theatreRoutes");
+const movieRoutes = require('./routes/movieRoutes');
 
 mongoose
   .connect(
@@ -21,6 +22,7 @@ app.use(express.urlencoded());
 
 app.use("/api/users", userRoutes);
 app.use("/api/theatres", theatreRoutes);
+app.use('/api/movies' , movieRoutes );
 
 app.listen(PORT, () => {
   console.log(`Server started and is running on port ${PORT}`);

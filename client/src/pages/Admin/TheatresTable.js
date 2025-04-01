@@ -26,6 +26,8 @@ function TheatresTable() {
     } catch (err) {
       dispatch(hideLoading());
       message.error(err.message);
+    } finally {
+      dispatch(hideLoading());
     }
   };
 
