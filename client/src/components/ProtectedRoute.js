@@ -58,6 +58,7 @@ function ProtectedRoute({ children }) {
 
   const getValidUser = async () => {
     try {
+      console.log("getValidUser called"); // Debug log
       dispatch(showLoading());
       const response = await getCurrentUser();
       if (response.success) {
@@ -72,6 +73,7 @@ function ProtectedRoute({ children }) {
         dispatch(hideLoading());
       }
     } catch (error) {
+      console.log("Error in getValidUser:", error); // Debug log
       dispatch(hideLoading());
       dispatch(setUser(null));
       message.error(error.message);
