@@ -28,6 +28,14 @@ app.use("/api/movies", movieRoutes);
 app.use("/api/shows", showRoutes);
 app.use("/api/bookings", bookingRoutes);
 
+// Serve static files from React app
+const path = require("path");
+app.use(express.static(path.join(__dirname, "../client/build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));
+});
+
 app.listen(PORT, () => {
   console.log(`Server started and is running on port ${PORT}`);
 });
