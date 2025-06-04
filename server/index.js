@@ -1,9 +1,11 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
 const mongoose = require("mongoose");
 
 const app = express();
 const PORT = 5000;
+app.use(cors());
 const userRoutes = require("./routes/userRoute");
 const theatreRoutes = require("./routes/theatreRoutes");
 const movieRoutes = require("./routes/movieRoutes");
