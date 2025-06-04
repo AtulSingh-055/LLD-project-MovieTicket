@@ -13,9 +13,7 @@ const showRoutes = require("./routes/showRoutes");
 const bookingRoutes = require("./routes/bookingRoute");
 
 mongoose
-  .connect(
-    "mongodb+srv://atulchakrawarty:gLAaQiH7afazN90l@lldcluster0.vbefk8i.mongodb.net/BMS?retryWrites=true&w=majority&appName=LLDCluster0"
-  )
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("DB connected"))
   .catch((err) => {
     console.log(err);
