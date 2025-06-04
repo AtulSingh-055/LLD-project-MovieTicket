@@ -4,8 +4,7 @@ const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const authMiddleware = require("../middlewares/authMiddleware");
-
-// Route for Register
+//Route for Register
 
 router.post("/register", async (req, res) => {
   try {
@@ -14,23 +13,18 @@ router.post("/register", async (req, res) => {
     if (userExists) {
       res.send({
         success: false,
-        message: "user already exists",
+        message: "User already exists",
       });
     }
 
-    // Hash The password
+    //Hashing the password
 
     const salt = await bcrypt.genSalt(10);
-
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
     req.body.password = hashedPassword;
 
-    console.log(salt);
-
     const newUser = await User(req.body);
-
-    await newUser.save(); // saves the data in the database
-
+    await newUser.save(); //saves the data in the database
     res.send({
       success: true,
       message: "User registered successfully",
@@ -44,22 +38,21 @@ router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
 
-    console.log(user);
-
     if (!user) {
-      return res.send({
+      res.send({
         success: false,
-        message: "You are not registered! Please register first",
+        message: "User not registered, please register first",
       });
     }
+
     const validPassword = await bcrypt.compare(
       req.body.password,
       user.password
     );
     if (!validPassword) {
-      return res.send({
+      res.send({
         success: false,
-        message: "Sorry, invalid password entered!",
+        message: "Password does not match",
       });
     }
 
@@ -70,11 +63,11 @@ router.post("/login", async (req, res) => {
     res.send({
       success: true,
       user: user,
-      message: "User Logged in",
+      message: "Successfully Logged in",
       token: token,
     });
   } catch (error) {
-    console.log(err);
+    console.log(error);
   }
 });
 
@@ -84,7 +77,7 @@ router.get("/get-current-user", authMiddleware, async (req, res) => {
 
   res.send({
     success: true,
-    message: "User authorzied for Protected Route",
+    message: "User authorized for protected route",
     data: user,
   });
 });

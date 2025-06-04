@@ -1,13 +1,14 @@
-const express = require("express");
 require("dotenv").config();
+const express = require("express");
 const mongoose = require("mongoose");
 
 const app = express();
 const PORT = 5000;
 const userRoutes = require("./routes/userRoute");
 const theatreRoutes = require("./routes/theatreRoutes");
-const movieRoutes = require('./routes/movieRoutes');
-//const showRoutes = require('./routes/showRoutes');
+const movieRoutes = require("./routes/movieRoutes");
+const showRoutes = require("./routes/showRoutes");
+const bookingRoutes = require("./routes/bookingRoute");
 
 mongoose
   .connect(
@@ -23,8 +24,9 @@ app.use(express.urlencoded());
 
 app.use("/api/users", userRoutes);
 app.use("/api/theatres", theatreRoutes);
-app.use('/api/movies' , movieRoutes );
-//app.use('/api/shows' , showRoutes );
+app.use("/api/movies", movieRoutes);
+app.use("/api/shows", showRoutes);
+app.use("/api/bookings", bookingRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server started and is running on port ${PORT}`);

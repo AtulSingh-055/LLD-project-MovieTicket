@@ -91,8 +91,6 @@ router.post("/get-all-theatres-by-movie", async (req, res) => {
       message: err.message,
     });
   }
-
-  // let uniqueTheatres = []
 });
 
 // Get shows by Theatres
